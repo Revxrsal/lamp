@@ -30,6 +30,8 @@ import revxrsal.commands.bukkit.BukkitCommandHandler;
 import java.util.Objects;
 import java.util.function.Function;
 
+import static revxrsal.commands.bukkit.brigadier.BukkitVersion.*;
+
 /**
  * Factory for obtaining instances of {@link Commodore}.
  */
@@ -43,44 +45,19 @@ public final class CommodoreProvider {
 
     @SuppressWarnings("Convert2MethodRef")
     private static Function<BukkitCommandHandler, Commodore> checkSupported() {
-        try {
-            Class.forName("com.mojang.brigadier.CommandDispatcher");
-        } catch (Throwable e) {
-            printDebugInfo(e);
+        if (!isBrigadierSupported()) {
             return null;
         }
 
-        // try the reflection impl
-        try {
-            ReflectionCommodore.ensureSetup();
-            return plugin -> new ReflectionCommodore(plugin);
-        } catch (Throwable e) {
-            printDebugInfo(e);
+        if (isPaper()) {
+            if (supports(1, 20, 6)) {
+                return plugin -> new PaperLifecycleEvents(plugin);
+            }
+            if (supports(1, 19)) {
+                return plugin -> new PaperCommodore(plugin);
+            }
         }
-
-        try {
-            PaperLifecycleEvents.ensureSetup();
-            return plugin -> new PaperLifecycleEvents(plugin);
-        } catch (Throwable e) {
-            printDebugInfo(e);
-        }
-
-        // try the paper impl
-        try {
-            PaperCommodore.ensureSetup();
-            return plugin -> new PaperCommodore(plugin);
-        } catch (Throwable e) {
-            printDebugInfo(e);
-        }
-
-        return null;
-    }
-
-    private static void printDebugInfo(Throwable e) {
-        if (System.getProperty("commodore.debug") != null) {
-            System.err.println("Exception while initialising commodore:");
-            e.printStackTrace(System.err);
-        }
+        return plugin -> new ReflectionCommodore(plugin);
     }
 
     /**
