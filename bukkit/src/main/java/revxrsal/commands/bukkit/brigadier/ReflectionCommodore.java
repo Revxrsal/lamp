@@ -119,7 +119,7 @@ final class ReflectionCommodore extends Commodore {
         CommandDispatcher dispatcher = getDispatcher();
         RootCommandNode root = dispatcher.getRoot();
 
-        removeChild(root, node.getName());
+        BrigadierUtil.removeChild(root, node.getName());
         root.addChild(node);
         registeredNodes.add(node);
     }
@@ -131,7 +131,7 @@ final class ReflectionCommodore extends Commodore {
 
         Collection<String> aliases = getAliases(command);
         if (!aliases.contains(node.getLiteral())) {
-            node = renameLiteralNode(node, command.getName());
+            node = BrigadierUtil.renameLiteralNode(node, command.getName());
         }
 
         for (String alias : aliases) {
@@ -156,7 +156,7 @@ final class ReflectionCommodore extends Commodore {
             RootCommandNode root = dispatcher.getRoot();
 
             for (LiteralCommandNode<?> node : registeredNodes) {
-                removeChild(root, node.getName());
+                BrigadierUtil.removeChild(root, node.getName());
                 root.addChild(node);
             }
         }
@@ -169,7 +169,7 @@ final class ReflectionCommodore extends Commodore {
             RootCommandNode root = dispatcher.getRoot();
 
             for (LiteralCommandNode<?> node : registeredNodes) {
-                removeChild(root, node.getName());
+                BrigadierUtil.removeChild(root, node.getName());
             }
         }
     }

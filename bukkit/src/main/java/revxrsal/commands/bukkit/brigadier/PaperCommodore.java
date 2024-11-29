@@ -123,7 +123,7 @@ final class PaperCommodore extends Commodore implements Listener {
 
         Collection<String> aliases = getAliases(command);
         if (!aliases.contains(node.getLiteral())) {
-            node = renameLiteralNode(node, command.getName());
+            node = BrigadierUtil.renameLiteralNode(node, command.getName());
         }
 
         for (String alias : aliases) {

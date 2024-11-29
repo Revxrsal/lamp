@@ -116,7 +116,7 @@ public final class CommodoreBukkitBrigadier implements BukkitBrigadier {
 
     @Override public @NotNull CommandActor wrapSource(@NotNull Object commandSource) {
         checkSupported();
-        return new BukkitActor(commodore.getBukkitSender(commandSource), handler);
+        return new BukkitActor(BrigadierUtil.getBukkitSender(commandSource), handler);
     }
 
     @Override public void disableNativePlayerCompletion() {
