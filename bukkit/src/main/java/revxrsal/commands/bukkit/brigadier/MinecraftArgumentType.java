@@ -373,21 +373,24 @@ public enum MinecraftArgumentType {
 
     private static @Nullable Class<?> resolveArgumentClass(String name) {
         try {
-            if (ReflectionUtil.minecraftVersion() > 16) {
-                return ReflectionUtil.mcClass("commands.arguments." + name);
+            if (BukkitVersion.supports(1, 16)) {
+                try {
+                    return BukkitVersion.findNmsClass("commands.arguments." + name);
+                } catch (Throwable ignored) {
+                    return Class.forName("net.minecraft.commands.arguments." + name);
+                }
             } else {
                 String stripped;
                 if (name.lastIndexOf('.') != -1)
                     stripped = name.substring(name.lastIndexOf('.') + 1);
                 else
                     stripped = name;
-                return ReflectionUtil.nmsClass(stripped);
+                return BukkitVersion.findNmsClass(stripped);
             }
         } catch (Throwable t) {
             return null;
         }
     }
-
     public static void ensureSetup() {
         // do nothing - this is only called to trigger the static initializer
     }
