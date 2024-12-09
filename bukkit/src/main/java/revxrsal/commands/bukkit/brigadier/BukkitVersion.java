@@ -123,7 +123,10 @@ final class BukkitVersion {
         if (supports(1, UNVERSION_NMS)) {
             return Class.forName("net.minecraft.server." + name);
         }
-        return Class.forName("net.minecraft.server." + VERSION + "." + name);
+        int dotIndex = name.lastIndexOf('.');
+        if (dotIndex == -1)
+            return Class.forName("net.minecraft.server." + VERSION + "." + name);
+        return Class.forName("net.minecraft.server." + VERSION + "." + name.substring(dotIndex + 1));
     }
 
     /**
