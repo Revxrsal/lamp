@@ -64,14 +64,8 @@ final class ReflectionCommodore extends Commodore {
             final Class<?> minecraftServer;
             final Class<?> commandDispatcher;
 
-            if (BukkitVersion.supports(1, 16)) {
-                minecraftServer = BukkitVersion.findNmsClass("server.MinecraftServer");
-                commandDispatcher = BukkitVersion.findNmsClass("commands.CommandDispatcher");
-            } else {
-                minecraftServer = BukkitVersion.findNmsClass("MinecraftServer");
-                commandDispatcher = BukkitVersion.findNmsClass("CommandDispatcher");
-            }
-
+            minecraftServer = BukkitVersion.findNmsClass("server.MinecraftServer");
+            commandDispatcher = BukkitVersion.findNmsClass("commands.CommandDispatcher");
             Class<?> craftServer = BukkitVersion.findOcbClass("CraftServer");
             CONSOLE_FIELD = craftServer.getDeclaredField("console");
             CONSOLE_FIELD.setAccessible(true);
