@@ -373,7 +373,7 @@ public enum MinecraftArgumentType {
 
     private static @Nullable Class<?> resolveArgumentClass(String name) {
         try {
-            if (BukkitVersion.supports(1, 16)) {
+            if (BukkitVersion.supports(1, 17)) {
                 try {
                     return BukkitVersion.findNmsClass("commands.arguments." + name);
                 } catch (Throwable ignored) {
