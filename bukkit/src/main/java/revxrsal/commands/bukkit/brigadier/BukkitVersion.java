@@ -115,6 +115,15 @@ final class BukkitVersion {
     }
 
     /**
+     * Returns the current version string, for example v1_17_R1
+     *
+     * @return The current version string
+     */
+    public static @NotNull String version() {
+        return VERSION;
+    }
+
+    /**
      * Returns the NMS class with the given name. The name must not contain
      * the net.minecraft.server prefix.
      */
