@@ -45,6 +45,8 @@ public enum RangeChecker implements ParameterValidator<CommandActor, Number> {
         Range range = parameter.annotations().get(Range.class);
         if (range == null)
             return;
+        if (value == null) 
+            return;
         if (value.doubleValue() > range.max() || value.doubleValue() < range.min())
             throw new NumberNotInRangeException(value, range.min(), range.max());
     }
